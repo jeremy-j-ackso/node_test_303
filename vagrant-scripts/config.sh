@@ -14,6 +14,7 @@ couchdb couchdb/adminpass_again password ${COUCHDB_PASSWORD}
 couchdb couchdb/adminpass_again seen true" | debconf-set-selections
 
 # Installing couchdb
+apt-get update -y -q
 DEBIAN_FRONTEND=noninteractive apt-get install -y -q couchdb
 
 # Creating couchdb database for node_db.
