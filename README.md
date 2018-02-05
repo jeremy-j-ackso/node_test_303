@@ -33,7 +33,7 @@ Should update an existing document in the database and otherwise error.
 
 ```javascript
 // Example:
-curl -sL -X POST http://site.com:3000/insertDocs \
+curl -sL -X POST http://site.com:3000/updateDoc \
   -H 'Accept: application/json'
   -H 'Accept: application/json'
   --data '{"_id": "someid", "somedata": {"nestedworks": "two"}, "otherdata": 1}'
