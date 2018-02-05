@@ -1,6 +1,6 @@
 /* eslint no-underscore-dangle: "off" */
 
-const nodeDb = require('nano')('http://localhost:5984/node_db');
+const nodeDb = require('nano')('http://node_user:realysecure@localhost:5984/node_db');
 
 
 function addDocument(document) {
@@ -15,7 +15,7 @@ function addDocument(document) {
 // Get one by id.
 function getOne(id) {
   return new Promise((resolve, reject) => {
-    nodeDb.get(id._id, (err, body) => {
+    nodeDb.get(id._id, { include_docs: true }, (err, body) => {
       if (err) reject(new Error(`There was a problem getting that record from the database.\nID requested: ${id}\nError from database: ${err}`));
       resolve(body);
     });
@@ -35,10 +35,14 @@ function getAllDocs() {
 // Update a doc.
 function updateDoc(id, document) {
   return new Promise((resolve, reject) => {
-    nodeDb.insert(document, id._id, (err, body) => {
-      if (err) reject(new Error(`There was a problem updating that record.\n_id of record to be updated: ${id}\nDocument the record is to be updated to: ${document}\nError from database: ${err}`));
-      resolve(body);
-    });
+    getOne(id)
+      .then((passedData) => {
+        const { _rev } = passedData;
+        nodeDb.insert({ ...document, _rev }, id._id, (err, body) => {
+          if (err) reject(new Error(`There was a problem updating that record.\n_id of record to be updated: ${id}\nDocument the record is to be updated to: ${document}\nError from database: ${err}`));
+          resolve(body);
+        });
+      });
   });
 }
 

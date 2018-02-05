@@ -9,20 +9,20 @@ const {
   removeDoc,
 } = require('./src/query.js');
 
-const app = express.router();
+const app = express();
 
 app.use(bodyParser.json());
 
 // Create a document.
 app.put('/addDocument', (req, res) => {
-  addDocument()
+  addDocument(req.body)
     .then(passedData => res.send(passedData))
     .catch(err => res.status(500).send(err));
 });
 
 // Get one by id.
 app.get('/getOne', (req, res) => {
-  getOne()
+  getOne(req.query)
     .then(passedData => res.send(passedData))
     .catch(err => res.status(500).send(err));
 });
@@ -36,7 +36,7 @@ app.get('/getAllDocs', (req, res) => {
 
 // Update a doc.
 app.post('/updateDoc', (req, res) => {
-  updateDoc()
+  updateDoc(req.query, req.body)
     .then(passedData => res.send(passedData))
     .catch(err => res.status(500).send(err));
 });
@@ -48,3 +48,4 @@ app.delete('/removeDoc', (req, res) => {
     .catch(err => res.status(500).send(err));
 });
 
+app.listen('3000');
