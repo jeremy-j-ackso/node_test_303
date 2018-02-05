@@ -1,5 +1,7 @@
 # Adding couchdb repos
 echo "deb https://apache.bintray.com/couchdb-deb xenial main" > /etc/apt/sources.list.d/couchdb.list
+curl -L https://couchdb.apache.org/repo/bintray-pubkey.asc | apt-key add -
+
 
 # Setting up couchdb debconf
 COUCHDB_PASSWORD=password
