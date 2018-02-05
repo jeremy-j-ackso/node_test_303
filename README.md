@@ -33,7 +33,7 @@ Should update an existing document in the database and otherwise error.
 
 ```javascript
 // Example:
-curl -sL -X POST http://site.com:3000/updateDoc \
+curl -sL -X POST http://site.com:3000/updateDoc?_id=XXXXX \
   -H 'Accept: application/json'
   -H 'Accept: application/json'
   --data '{"_id": "someid", "somedata": {"nestedworks": "two"}, "otherdata": 1}'
@@ -44,5 +44,5 @@ Should mark a document as deleted.
 
 ```javascript
 // Example:
-curl -sL DELETE http://site.com3000/removeDoc?_id=someid
+curl -sL DELETE http://site.com3000/removeDoc?_id=someid&rev=somerev
 ```
